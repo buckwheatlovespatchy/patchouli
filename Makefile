@@ -1,6 +1,6 @@
 .POSIX:
 
-BUILD = go build
+BUILD = CC=clang go build
 BUILD_FLAGS = -buildvcs=false -x -o
 BIN_PATH = /usr/local/bin/
 BIN_NAME = patchouli
