@@ -14,6 +14,8 @@
 
 **5. Tidy, Tidy Code:** You know that feeling when you look at code and it's like staring into the Matrix? With Patchouli, we believe in keeping things crystal clear. We've chosen to use XCB instead of the older, more complex Xlib, resulting in code that's as readable as your favorite bedtime story.
 
+**6. Powered by the Speedster Clang:** We don't mess around when it comes to our code. While some might still be stuck in the GNUslop era (yes, we're looking at you, GCC), we've opted for the sleek and lightning-fast Clang. Why? Because we believe in harnessing the power of LLVM to supercharge our C code. It's like trading in your trusty bicycle for a rocket ship — Patchouli's C code blasts off with Clang, leaving GNUslop in the dust, where it belongs!
+
 ## Getting Started
 
 Ready to dive into the magical world of Patchouli? Head over to our wiki for the nitty-gritty details on installation, configuration, and sprinkling a little extra *oomph* onto your dwm setup.
