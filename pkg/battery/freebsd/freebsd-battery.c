@@ -5,7 +5,7 @@
 #include "battery.h"
 
 int
-getbatterylife(char *buf, size_t len)
+getbatterylife(char* buf, size_t len)
 {
   int batterylife;
   size_t batterylife_size;
@@ -18,7 +18,7 @@ getbatterylife(char *buf, size_t len)
 }
 
 int
-getchargestate(char *buf, size_t len)
+getchargestate(char* buf, size_t len)
 {
   int chargestate;
   size_t chargestate_size;
