@@ -23,16 +23,16 @@ getchargestate(char *buf, size_t len)
   int chargestate;
   size_t chargestate_size;
 
-  if (sysctlbyname("hw.acpi.acline", &chargestate, &chargestate_size, NULL, 0) == -1) return 1;
+  if (sysctlbyname("hw.acpi.battery.state", &chargestate, &chargestate_size, NULL, 0) == -1) return 1;
 
   switch (chargestate)
   {
     case 0:
-      snprintf(buf, len, "==");
+      snprintf(buf, len, ">>");
       break;
 
     case 1:
-      snprintf(buf, len, ">>");
+      snprintf(buf, len, "==");
       break;
 
     default:
