@@ -1,6 +1,8 @@
 #ifndef _FREEBSD_BATTERY_H
 #define _FREEBSD_BATTERY_H
 
+#include <stdlib.h>
+
 int
 getbatterylife(char* buf, size_t len);
 

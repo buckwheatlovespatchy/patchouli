@@ -6,6 +6,12 @@ BIN_PATH = /usr/local/bin/
 BIN_NAME = patchouli
 C_SRC = ./pkg/battery
 
+freebsd:
+	@cp $(C_SRC)/freebsd/freebsd-battery.c $(C_SRC)/battery.c
+	@cp $(C_SRC)/freebsd/freebsd-battery.h $(C_SRC)/battery.h
+	@$(BUILD) $(BUILD_FLAGS) $(BIN_PATH)$(BIN_NAME)
+	@printf "%s was installed to %s, please ensure that %s is in your PATH variable.\n" "$(BIN_NAME)" "$(BIN_PATH)" "$(BIN_PATH)"	
+
 netbsd:
 	@cp $(C_SRC)/netbsd/netbsd-battery.c $(C_SRC)/battery.c
 	@cp $(C_SRC)/netbsd/netbsd-battery.h $(C_SRC)/battery.h

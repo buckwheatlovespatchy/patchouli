@@ -59,8 +59,7 @@ getchargestate(char* buf, size_t len)
         break;
       
       default:
-        snprintf(buf, len, "??");
-        break;
+        return 1;
     }
   }
 
