@@ -1,9 +1,10 @@
 package main
 
 import (
+  "flag"
   "fmt"
-  //"os"
   "runtime"
+  "os"
   "time"
 
   "chansoft/patchouli/pkg/battery"
@@ -16,42 +17,40 @@ func main() {
   var (
     arch    string = runtime.GOARCH // not sure if entirely necessary or bloat yet
     userOS  string = runtime.GOOS   // same with this
-
-    stat          string
+    
+    flagversion bool
+    stat        string
   )
 
-  /*
-  if len(os.Args) > 2 {
-    
-    fmt.Printf("ERROR: Too many arguments provided, user provided %d args when there can only be a single argument total", len(os.Args))
-    os.Exit(1)
+  flag.BoolVar(&flagversion, "v", false, "Patchouli version")
+  flag.BoolVar(&flagversion, "version", false, "Patchouli version")
 
-  } else if len(os.Args) == 1 {
-    
-    switch (os.Args[1]) {
-      case "help":
-      util.HelpMenu(version)
-
-      case "version":
-      fmt.Printf("Patchouli %s/%s %s\n", userOS, arch, version)
-
-      default:
-      fmt.Printf("ERROR: Argument %s not found", os.Args[1])
-      os.Exit(1)
-    }
-
-  } else {
-  */  
-  for {
-    stat = fmt.Sprintf("[ Patchouli %s %s/%s | %s | %s %s ]", version, userOS, arch, util.GetDate(), battery.BatteryState(), battery.BatteryLife())
-   
-    err := util.SetStatbar(stat)
-    if err != nil {
-      panic(err)
-    }
-
-    time.Sleep(1 * time.Second)
+  flag.Usage = func() {
+    fmt.Printf("Patchouli %s\nUsage: patchouli [optional args]\n\nFlags:\n", version)
+    fmt.Printf("    -v, -version - Print current version of Patchouli\n    -h, -help - Print out this help menu\n")
   }
 
-  //}
+  flag.Parse()
+
+  if flag.NFlag() > 1 {
+    fmt.Printf("ERROR: Too many arguments passed - %d args were passed, maximum amount is 1\n", flag.NFlag())
+    os.Exit(1)
+  }
+
+  if flagversion == true {
+    fmt.Printf("Patchouli %s %s/%s\n", version, userOS, arch)
+  } else {
+    
+    for {
+      stat = fmt.Sprintf("[ Patchouli %s %s/%s | %s | %s %s ]", version, userOS, arch, util.GetDate(), battery.BatteryState(), battery.BatteryLife())
+   
+      err := util.SetStatbar(stat)
+      if err != nil {
+        panic(err)
+      }
+
+      time.Sleep(1 * time.Second)
+    }
+
+  }
 }

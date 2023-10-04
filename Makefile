@@ -1,7 +1,7 @@
 .POSIX:
 
 BUILD = go build
-BUILD_FLAGS = -x -o
+BUILD_FLAGS = -buildvcs=false -x -o
 BIN_PATH = /usr/local/bin/
 BIN_NAME = patchouli
 C_SRC = ./pkg/battery

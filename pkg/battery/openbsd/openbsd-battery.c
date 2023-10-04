@@ -35,20 +35,12 @@ getchargestate(char* buf, size_t len)
 
   switch (info.battery_state)
   {
-    case APM_BATT_HIGH:
-      snprintf(buf, len, "==");
-      break;
-
-    case APM_BATT_LOW:
-      snprintf(buf, len, "==");
-      break;
-
-    case APM_BATT_CRITICAL:
-      snprintf(buf, len, "==");
-      break;
-
     case APM_BATT_CHARGING:
       snprintf(buf, len, ">>");
+      break;
+
+    default:
+      snprintf(buf, len, "==");
       break;
   }
 
