@@ -8,7 +8,7 @@ int
 getbatterylife(char* buf, size_t len)
 {
   int batterylife;
-  size_t batterylife_size;
+  size_t batterylife_size = sizeof(batterylife);
 
   if (sysctlbyname("hw.acpi.battery.life", &batterylife, &batterylife_size, NULL, 0) == -1) return 1;
 
@@ -21,7 +21,7 @@ int
 getchargestate(char* buf, size_t len)
 {
   int chargestate;
-  size_t chargestate_size;
+  size_t chargestate_size = sizeof(chargestate);
 
   if (sysctlbyname("hw.acpi.battery.state", &chargestate, &chargestate_size, NULL, 0) == -1) return 1;
 
