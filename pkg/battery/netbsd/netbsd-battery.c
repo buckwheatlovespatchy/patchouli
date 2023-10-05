@@ -16,16 +16,14 @@ getbatterylife(char* buf, size_t len)
   
   int sysmon_fd = open("/dev/sysmon", O_RDONLY);
 
-  if (getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return 1;
-  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info) == -1) return 1;
+  if (getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info) == -1) return cleanup(sysmon_fd, 1);
 
   int battery = (int)(((double)battery_info.cur.data_s / 1000000.0) / ((double)battery_info.cur.data_s / 1000000.0) * 100.0);
 
   snprintf(buf, len, "%d", battery);
   
-  close(sysmon_fd);
-
-  return 0;
+  return cleanup(sysmon_fd, 0);
 }
 
 int
@@ -35,8 +33,8 @@ getchargestate(char* buf, size_t len)
   
   int sysmon_fd = open("/dev/sysmon", O_RDONLY);
 
-  if (getchargesensor(&charge_info, sysmon_fd, sizeof(charge_info))) return 1;
-  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info) == -1) return 1;
+  if (getchargesensor(&charge_info, sysmon_fd, sizeof(charge_info))) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info) == -1) return cleanup(sysmon_fd, 1);
 
   if (charge_info.units == ENVSYS_INDICATOR)
   {
@@ -51,13 +49,18 @@ getchargestate(char* buf, size_t len)
         break;
       
       default:
-        return 1;
+        return cleanup(sysmon_fd, 1);
     }
   }
 
-  close(sysmon_fd);
+  return cleanup(sysmon_fd, 0);
+}
 
-  return 0;
+static int
+cleanup(int sysmon_fd, int exitcode)
+{
+  close(sysmon_fd);
+  return exitcode;
 }
 
 static int
