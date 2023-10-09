@@ -28,11 +28,15 @@ getchargestate(char* buf, size_t len)
   switch (chargestate)
   {
     case 0:
-      snprintf(buf, len, ">>");
+      snprintf(buf, len, "==");
       break;
 
     case 1:
       snprintf(buf, len, "==");
+      break;
+
+    case 2:
+      snprintf(buf, len, ">>");
       break;
 
     default:
