@@ -15,10 +15,6 @@ install()
   OS=$(uname -s)
 
   case "$OS" in
-    "DragonflyBSD")
-      make dragonflybsd clean
-    ;;
-
     "FreeBSD")
       make freebsd clean
     ;;
