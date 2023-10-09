@@ -27,16 +27,20 @@ getchargestate(char* buf, size_t len)
 
   switch (chargestate)
   {
-    case 0:
+    case BATT_NOT_CHARGING:
       snprintf(buf, len, "==");
       break;
 
-    case 1:
+    case BATT_DISCHARGING:
       snprintf(buf, len, "==");
       break;
 
-    case 2:
+    case BATT_CHARGING:
       snprintf(buf, len, ">>");
+      break;
+
+    case BATT_CRITICAL:
+      snprintf(buf, len, "==");
       break;
 
     default:
