@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/sysctl.h>
 
 #include "battery.h"
