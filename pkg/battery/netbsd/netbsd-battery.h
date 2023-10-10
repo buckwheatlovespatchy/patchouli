@@ -1,6 +1,8 @@
 #ifndef _NETBSD_BATTERY_H_
 #define _NETBSD_BATTERY_H_
 
+#define WATTHOURS 1000000.0
+
 #include <stdlib.h>
 #include <sys/envsys.h>
 

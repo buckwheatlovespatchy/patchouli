@@ -9,4 +9,7 @@ getbatterylife(char* buf, size_t len);
 int  
 getchargestate(char* buf, size_t len);
 
+static int
+cleanup(int apm_fd, int exitcode);
+
 #endif

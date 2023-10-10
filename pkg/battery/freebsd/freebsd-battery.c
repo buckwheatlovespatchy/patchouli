@@ -39,7 +39,7 @@ getchargestate(char* buf, size_t len)
       break;
 
     case BATT_CRITICAL:
-      snprintf(buf, len, "==");
+      snprintf(buf, len, "!!");
       break;
 
     default:

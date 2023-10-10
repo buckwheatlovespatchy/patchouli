@@ -15,9 +15,9 @@ getbatterylife(char* buf, size_t len)
   int sysmon_fd = open("/dev/sysmon", O_RDONLY);
 
   if (getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return cleanup(sysmon_fd, 1);
-  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info) == -1) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info)) return cleanup(sysmon_fd, 1);
 
-  int battery = (((double)battery_info.cur.data_s / 1000000.0) / ((double)battery_info.max.data_s / 1000000.0)) * 100.0;
+  int battery = (((double)battery_info.cur.data_s / WATTHOURS) / ((double)battery_info.max.data_s / WATTHOURS)) * 100.0;
 
   snprintf(buf, len, "%d", battery);
   
@@ -27,12 +27,16 @@ getbatterylife(char* buf, size_t len)
 int
 getchargestate(char* buf, size_t len)
 {
+  struct envsys_tre_data battery_info;
   struct envsys_tre_data charge_info;
   
   int sysmon_fd = open("/dev/sysmon", O_RDONLY);
 
+  if (getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info)) return cleanup(sysmon_fd, 1);
+  
   if (getchargesensor(&charge_info, sysmon_fd, sizeof(charge_info))) return cleanup(sysmon_fd, 1);
-  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info) == -1) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info)) return cleanup(sysmon_fd, 1);
 
   if (charge_info.units == ENVSYS_INDICATOR)
   {
@@ -42,8 +46,10 @@ getchargestate(char* buf, size_t len)
         snprintf(buf, len, ">>");
         break;
       
-      case ENVSYS_INDICATOR_FALSE: // Rewrite case to check for the current battery state
-        snprintf(buf, len, "==");
+      case ENVSYS_INDICATOR_FALSE: // Rewrite case to check for the current battery static_assert
+        if (battery_info.warnflags) snprintf(buf, len, "!!");
+        else snprintf(buf, len, "==");
+        
         break;
       
       default:
