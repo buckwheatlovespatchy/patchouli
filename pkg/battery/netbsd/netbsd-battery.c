@@ -14,10 +14,10 @@ getbatterylife(char* buf, size_t len)
   
   int sysmon_fd = open("/dev/sysmon", O_RDONLY);
 
-  if (!getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return cleanup(sysmon_fd, 1);
-  if (!ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info) == -1) return cleanup(sysmon_fd, 1);
+  if (getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info) == -1) return cleanup(sysmon_fd, 1);
 
-  int battery = (int)(((double)battery_info.cur.data_s / 1000000.0) / ((double)battery_info.cur.data_s / 1000000.0) * 100.0);
+  int battery = (((double)battery_info.cur.data_s / 1000000.0) / ((double)battery_info.max.data_s / 1000000.0)) * 100.0;
 
   snprintf(buf, len, "%d", battery);
   
@@ -31,8 +31,8 @@ getchargestate(char* buf, size_t len)
   
   int sysmon_fd = open("/dev/sysmon", O_RDONLY);
 
-  if (!getchargesensor(&charge_info, sysmon_fd, sizeof(charge_info))) return cleanup(sysmon_fd, 1);
-  if (!ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info) == -1) return cleanup(sysmon_fd, 1);
+  if (getchargesensor(&charge_info, sysmon_fd, sizeof(charge_info))) return cleanup(sysmon_fd, 1);
+  if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info) == -1) return cleanup(sysmon_fd, 1);
 
   if (charge_info.units == ENVSYS_INDICATOR)
   {
@@ -73,7 +73,7 @@ getbatlifesensor(struct envsys_tre_data* sensorcheck, int sysmon_fd, size_t sens
     sensorcheck->sensor = sensor;
 
     if (ioctl(sysmon_fd, ENVSYS_GTREDATA, sensorcheck) == -1) exit(EXIT_FAILURE);
-    if (!sensorcheck->max.data_s || sensor == ENVSYS_MAXSENSORS) break; // Theoretically this should help prevent an unnecessary incrementing of sensor
+    if (sensorcheck->max.data_s || sensor == ENVSYS_MAXSENSORS) break; // Theoretically this should help prevent an unnecessary incrementing of sensor
     
     sensor++;
   }
