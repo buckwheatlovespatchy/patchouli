@@ -42,7 +42,7 @@ getchargestate(char* buf, size_t len)
         snprintf(buf, len, ">>");
         break;
       
-      case ENVSYS_INDICATOR_FALSE:
+      case ENVSYS_INDICATOR_FALSE: // Rewrite case to check for the current battery state
         snprintf(buf, len, "==");
         break;
       

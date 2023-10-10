@@ -33,7 +33,7 @@ getchargestate(char* buf, size_t len)
   if (ioctl(apm_fd, APM_IOC_GETPOWER, &info) == -1) return 1;
   if (info.battery_state == APM_BATTERY_ABSENT || info.battery_state == APM_BATT_UNKNOWN) return 1;
 
-  switch (info.battery_state)
+  switch (info.battery_state) // Rewrite switch case to account for other charging states using man apm(4)
   {
     case APM_BATT_CHARGING:
       snprintf(buf, len, ">>");
