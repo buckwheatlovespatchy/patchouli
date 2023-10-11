@@ -38,7 +38,7 @@ func BatteryState() string {
   var (
     state string
 
-    stateCLen    C.size_t = 3
+    stateCLen    C.size_t = 5
     stateCString *C.char  = (*C.char)(C.malloc(stateCLen))
   )
 

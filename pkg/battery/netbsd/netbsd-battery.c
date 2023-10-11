@@ -35,6 +35,8 @@ getchargestate(char* buf, size_t len)
   if (getbatlifesensor(&battery_info, sysmon_fd, sizeof(battery_info))) return cleanup(sysmon_fd, 1);
   if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &battery_info)) return cleanup(sysmon_fd, 1);
   
+  int battery = (((double)battery_info.cur.data_s / WATTHOURS) / ((double)battery_info.max.data_s / WATTHOURS)) * 100.0;
+  
   if (getchargesensor(&charge_info, sysmon_fd, sizeof(charge_info))) return cleanup(sysmon_fd, 1);
   if (ioctl(sysmon_fd, ENVSYS_GTREDATA, &charge_info)) return cleanup(sysmon_fd, 1);
 
@@ -43,12 +45,14 @@ getchargestate(char* buf, size_t len)
     switch (charge_info.cur.data_s)
     {
       case ENVSYS_INDICATOR_TRUE:
-        snprintf(buf, len, ">>");
+        snprintf(buf, len, CHARGE_BATT);
         break;
       
-      case ENVSYS_INDICATOR_FALSE: // Rewrite case to check for the current battery static_assert
-        if (battery_info.warnflags) snprintf(buf, len, "!!");
-        else snprintf(buf, len, "==");
+      case ENVSYS_INDICATOR_FALSE:
+        if (battery >= 75) snprintf(buf, len, HIGH_BATT);
+        else if (battery >= 50) snprintf(buf, len, MED_BATT);
+        else if (battery >= 25) snprintf(buf, len, LOW_BATT);
+        else snprintf(buf, len, CRIT_BATT);
         
         break;
       
@@ -70,7 +74,7 @@ cleanup(int sysmon_fd, int exitcode)
 static int
 getbatlifesensor(struct envsys_tre_data* sensorcheck, int sysmon_fd, size_t sensorcheck_size)
 {
-  static int sensor = 0; // Value stays consistent thus preventing it from mutating across calls to getbatlifesensor() and speeding things up
+  static int sensor = 0;
   
   memset(sensorcheck, 0, sensorcheck_size);
 
@@ -79,7 +83,7 @@ getbatlifesensor(struct envsys_tre_data* sensorcheck, int sysmon_fd, size_t sens
     sensorcheck->sensor = sensor;
 
     if (ioctl(sysmon_fd, ENVSYS_GTREDATA, sensorcheck) == -1) exit(EXIT_FAILURE);
-    if (sensorcheck->max.data_s || sensor == ENVSYS_MAXSENSORS) break; // Theoretically this should help prevent an unnecessary incrementing of sensor
+    if (sensorcheck->max.data_s || sensor == ENVSYS_MAXSENSORS) break;
     
     sensor++;
   }
@@ -96,7 +100,7 @@ getchargesensor(struct envsys_tre_data* sensorcheck, int sysmon_fd, size_t senso
 
   if (getbatlifesensor(sensorcheck, sysmon_fd, sensorcheck_size)) return 1;
 
-  batlifesensor = sensorcheck->sensor + 3; // Theoretically should give us the charging sensor
+  batlifesensor = sensorcheck->sensor + 3;
   sensorcheck->sensor = batlifesensor;
 
   return 0;

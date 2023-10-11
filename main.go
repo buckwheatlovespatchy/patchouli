@@ -15,8 +15,8 @@ const version = "v0.0.1"
 
 func main() {
   var (
-    arch    string = runtime.GOARCH // not sure if entirely necessary or bloat yet
-    userOS  string = runtime.GOOS   // same with this
+    arch    string = runtime.GOARCH
+    userOS  string = runtime.GOOS
     
     flagversion bool
     stat        string
@@ -42,7 +42,11 @@ func main() {
   } else {
     
     for {
-      stat = fmt.Sprintf("[ Patchouli %s %s/%s | %s | %s %s ]", version, userOS, arch, util.GetDate(), battery.BatteryState(), battery.BatteryLife())
+      if battery.BatteryState() == "" && battery.BatteryLife() == "" {
+        stat = fmt.Sprintf("[ %s ]", util.GetDate())
+      } else {
+        stat = fmt.Sprintf("[ %s | %s %s ]", util.GetDate(), battery.BatteryState(), battery.BatteryLife())
+      }
    
       err := util.SetStatbar(stat)
       if err != nil {

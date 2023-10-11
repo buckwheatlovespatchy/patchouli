@@ -4,11 +4,11 @@
 
 ## What Makes Patchouli So Darn Special?
 
-**1. Minimalism on Steroids:** Patchouli doesn't do bloat. It's like a Marie Kondo-approved status bar – only the essential sparks joy. We keep things lean by minimizing the reliance on external libraries. You won't find an alphabet soup of dependencies here, just what the system provides and Go's standard library – ensuring a streamlined, lightweight status bar that won't weigh down your setup.
+**1. Minimalism on Steroids:** Patchouli doesn't do bloat. It's like a Marie Kondo-approved status bar – only the essential sparks joy. At Chansoft, we firmly believe that more code doesn't necessarily mean better software. We keep things lean by minimizing the reliance on external libraries. You won't find an alphabet soup of dependencies here, just what the system provides and Go's standard library – ensuring a streamlined, lightweight status bar that won't weigh down your setup.
 
 **2. Todd Howard Approved:** Because of all the effort we've put into Patchouli, you can rest easy knowing that Patchouli just works, and it works efficiently!
 
-**3. Go Go Go (and C):** Our blend of Go and C makes Patchouli not just fast but "I just time-traveled" fast. While many status bars for Window Managers rely on scripting languages for automation, we take a different approach. We harness the power of C for system-level operations, ensuring low-level efficiency. At the same time, Go steps in to perform scripting tasks at breakneck speed, thanks to its compiled nature. The result? A status bar that doesn't just keep up with your demands but zooms ahead, leaving others in the digital dust.
+**3. Go Go Go (and C):** Our blend of Go and C makes Patchouli not just fast but "I just time-traveled" fast. While Go handles everyday tasks at lightning speed, we trust C to take care of the heavy lifting. Intensive computations are C's playground, ensuring Patchouli's speed remains as swift as a wizard's spell. With this dynamic duo, your status bar will be more responsive than ever, even when you're pushing its magical limits.
 
 **4. No Docker, Just Metal:** We put our code to the real test — no Docker containers, just pure, unadulterated metal. Because that's how Patchouli rolls.
 
@@ -20,8 +20,18 @@
 
 Ready to dive into the magical world of Patchouli? Head over to our wiki for the nitty-gritty details on installation, configuration, and sprinkling a little extra *oomph* onto your dwm setup.
 
-### License
+## Requirements
 
-Put license shit here
+Before you embark on your Patchouli journey, make sure you've got the following essentials:
+
+- clang
+- go
+- Nerd Fonts
+
+## License
+
+Alright, let's talk legal stuff for a moment. Patchouli is licensed under the [AGPL 3.0](https://www.gnu.org/licenses/agpl-3.0.en.html), because we believe in sharing the magical goodness. In a nutshell, it means you're free to use, modify, and distribute Patchouli as long as you keep the magic flowing and share your changes with others.
+
+For all the nitty-gritty details, feel free to dive into the [full license text](https://www.gnu.org/licenses/agpl-3.0.en.html).
 
 Now, grab your wizard hat, sprinkle some coding magic, and let's Patchouli-fy your dwm setup!
