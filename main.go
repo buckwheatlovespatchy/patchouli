@@ -7,12 +7,14 @@ import (
   "os"
   "time"
 
-  "chansoft/patchouli/pkg/battery"
-  "chansoft/patchouli/pkg/network"
+  "chansoft/patchouli/pkg/config"
   "chansoft/patchouli/pkg/util"
 )
 
-const version = "v0.0.1"
+const (
+  empty   = "   "
+  version = "v0.0.1"
+)
 
 func main() {
   var (
@@ -40,10 +42,14 @@ func main() {
   } else {
     
     for {
-      if battery.BatteryState() == "" && battery.BatteryLife() == "" {
-        stat = fmt.Sprintf("[ %s | %s ]", network.NetworkInfo(), util.GetDate())
+      if config.BLOCK1() == empty {
+        stat = fmt.Sprintf("[ %s | %s ]", config.BLOCK2(), config.BLOCK3())
+      } else if config.BLOCK2() == empty {
+        stat = fmt.Sprintf("[ %s | %s ]", config.BLOCK1(), config.BLOCK3())
+      } else if config.BLOCK3() == empty {
+        stat = fmt.Sprintf("[ %s | %s ]", config.BLOCK1(), config.BLOCK2())
       } else {
-        stat = fmt.Sprintf("[ %s | %s | %s %s ]", network.NetworkInfo(), util.GetDate(), battery.BatteryState(), battery.BatteryLife())
+        stat = fmt.Sprintf("[ %s | %s | %s ]", config.BLOCK1(), config.BLOCK2(), config.BLOCK3())
       }
    
       err := util.SetStatbar(stat)
