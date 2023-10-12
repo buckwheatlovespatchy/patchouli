@@ -65,8 +65,6 @@ Before you embark on your Patchouli journey, make sure you've got the following 
 
 Alright, let's talk legal stuff for a moment. Patchouli is licensed under the [AGPL 3.0](https://github.com/buckwheatlovesmistral/patchouli/blob/main/LICENSE), because we believe in sharing the magical goodness. In a nutshell, it means you're free to use, modify, and distribute Patchouli as long as you keep the magic flowing and share your changes with others.
 
-For all the nitty-gritty details, feel free to dive into the [full license text](https://www.gnu.org/licenses/agpl-3.0.en.html).
-
 **Now, grab your wizard hat, sprinkle some coding magic, and let's Patchouli-fy your dwm setup!**
 
 ![PatchouliDance2](https://media.tenor.com/u2unDcISbw4AAAAC/patchouli-touhou.gif)
