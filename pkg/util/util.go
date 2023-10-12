@@ -27,10 +27,12 @@ func GetDate() string {
   return date
 }
 
-func HelpMenu(version string) {
-  fmt.Printf("\033[1mPatchouli %s\033[0m\n", version)
-  fmt.Printf("Usage: patchouli [&/args]\n")
-  fmt.Printf("Flags:\n    help - Print out this help menu\n    version - Print out the currently installed version of patchouli\n")
+func HelpMenu(version string) func() {
+  return func() {
+    fmt.Printf("\033[1mPatchouli %s\033[0m\n", version)
+    fmt.Printf("\nUsage: patchouli [&/args]\n")
+    fmt.Printf("\nFlags:\n    -h, --help - Print out this help menu\n    -v, --version - Print out the currently installed version of patchouli\n")
+  }
 }
 
 func SetStatbar(stat string) error {

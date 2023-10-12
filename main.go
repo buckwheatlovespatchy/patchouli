@@ -8,6 +8,7 @@ import (
   "time"
 
   "chansoft/patchouli/pkg/battery"
+  "chansoft/patchouli/pkg/network"
   "chansoft/patchouli/pkg/util"
 )
 
@@ -25,11 +26,8 @@ func main() {
   flag.BoolVar(&flagversion, "v", false, "Patchouli version")
   flag.BoolVar(&flagversion, "version", false, "Patchouli version")
 
-  flag.Usage = func() {
-    fmt.Printf("Patchouli %s\nUsage: patchouli [optional args]\n\nFlags:\n", version)
-    fmt.Printf("    -v, -version - Print current version of Patchouli\n    -h, -help - Print out this help menu\n")
-  }
-
+  flag.Usage = util.HelpMenu(version)
+  
   flag.Parse()
 
   if flag.NFlag() > 1 {
@@ -43,9 +41,9 @@ func main() {
     
     for {
       if battery.BatteryState() == "" && battery.BatteryLife() == "" {
-        stat = fmt.Sprintf("[ %s ]", util.GetDate())
+        stat = fmt.Sprintf("[ %s | %s ]", network.NetworkInfo(), util.GetDate())
       } else {
-        stat = fmt.Sprintf("[ %s | %s %s ]", util.GetDate(), battery.BatteryState(), battery.BatteryLife())
+        stat = fmt.Sprintf("[ %s | %s | %s %s ]", network.NetworkInfo(), util.GetDate(), battery.BatteryState(), battery.BatteryLife())
       }
    
       err := util.SetStatbar(stat)
