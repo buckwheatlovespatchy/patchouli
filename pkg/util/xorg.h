@@ -1,8 +1,10 @@
 #ifndef _XORG_H_
 #define _XORG_H_
 
+#include <xcb/xcb.h>
+
 int
-setstatbar(char* stat);
+setstatbar(const char* stat);
 
 static int
 basicerrorhandler(const char* errormsg);

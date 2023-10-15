@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <xcb/xcb.h>
 
 #include "xorg.h"
 
@@ -38,7 +37,7 @@ basicerrorhandler(const char* errormsg)
 static int 
 xcberrorhandler(xcb_generic_error_t* error, const char* errormsg, int errorcode)
 {
-  size_t perrormsglen = 50
+  size_t perrormsglen = 50;
   char perrormsg[perrormsglen];
 
   snprintf(perrormsg, perrormsglen, "%s - Error Code: %d\n", errormsg, errorcode);

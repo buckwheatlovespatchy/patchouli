@@ -15,6 +15,12 @@ freebsd:
 	@$(BUILD) $(BUILD_FLAGS) $(BIN_PATH)$(BIN_NAME)
 	@printf "%s was installed to %s, please ensure that %s is in your PATH variable.\n" "$(BIN_NAME)" "$(BIN_PATH)" "$(BIN_PATH)"	
 
+linux:
+	@cp $(BATT_SRC)/linux/linux-battery.c $(C_BATT)
+	@cp $(BATT_SRC)/linux/linux-battery.h $(H_BATT)
+	@$(BUILD) $(BUILD_FLAGS) $(BIN_PATH)$(BIN_NAME)
+	@printf "%s was installed to %s, please ensure that %s is in your PATH variable.\n" "$(BIN_NAME)" "$(BIN_PATH)" "$(BIN_PATH)"	
+
 netbsd:
 	@cp $(BATT_SRC)/netbsd/netbsd-battery.c $(C_BATT)
 	@cp $(BATT_SRC)/netbsd/netbsd-battery.h $(H_BATT)

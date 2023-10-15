@@ -19,7 +19,7 @@ install()
       make freebsd clean
     ;;
 
-    "GNU/Linux")
+    "Linux")
       make linux clean
     ;;
 
