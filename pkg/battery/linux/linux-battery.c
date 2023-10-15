@@ -88,7 +88,7 @@ errorhandler(char* errormsg)
 static int
 getbatteryID()
 {
-  static int batteryID;
+  static int batteryID = 0;
 
   for (;;)
   {
