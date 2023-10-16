@@ -1,14 +1,16 @@
 #include <arpa/inet.h>
-#include <net/if_dl.h>
-#include <net/if_types.h>
+#include <net/if.h>
+#include <net/if_arp.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include <sys/socket.h>
+#include <unistd.h>
 
 #include "network.h"
 
-int 
-getconnection(char* buf, size_t len)
+int
+getconnection(char *buf, size_t len)
 {
   struct ifaddrs* if_info;
   char ifname[20];
@@ -24,15 +26,14 @@ getconnection(char* buf, size_t len)
       if (strstr(iface->ifa_name, "tun")) continue;
 
       snprintf(ifname, sizeof(ifname), "%s", iface->ifa_name);
-
-      if (getifacestat(iface, ifaceconn, INET_ADDRSTRLEN)) return errorhandler(if_info, "Could not perform IP Address allocation to buffer");
       
-      getifacetype(iface, ifname, buf, len);
+      if (getifacestat(iface, ifaceconn, INET_ADDRSTRLEN)) return cleanuperrorhandler(if_info, "Could not perform IP Address allocation to buffer");
+      if (getifacetype(ifname, buf, len)) return cleanuperrorhandler(if_info, "Could not identify interface type");
 
       break;
     }
   }
-
+  
   if (!strcmp(ifaceconn, "")) snprintf(buf, len, "%s", OFFLINE);
 
   return cleanup(if_info, 0);
@@ -46,30 +47,46 @@ cleanup(struct ifaddrs* iface, int exitcode)
 }
 
 static int
-errorhandler(struct ifaddrs* iface, const char* errmsg)
+cleanuperrorhandler(struct ifaddrs* iface, const char* errmsg)
 {
   perror(errmsg);
   return cleanup(iface, 1);
 }
 
-static int 
+static int
+errorhandler(const char* errmsg)
+{
+  perror(errmsg);
+  return 1;
+}
+
+static int
 getifacestat(struct ifaddrs* iface, char* buf, size_t len)
 {
   struct sockaddr_in* ifaceaddr = (struct sockaddr_in*)iface->ifa_addr;
-
+  
   if (inet_ntop(AF_INET, &ifaceaddr->sin_addr, buf, len) == NULL) return 1;
-
+  
   return 0;
 }
 
-static void 
-getifacetype(struct ifaddrs* iface, const char* ifname, char* buf, size_t len)
+static int
+getifacetype(const char* ifname, char* buf, size_t len)
 {
-  struct sockaddr_dl* iface_info = (struct sockaddr_dl*)iface->ifa_addr;
+  struct ifreq ifacetype;
+  int sock = socket(AF_INET, SOCK_DGRAM, 0);
 
-  switch (iface_info->sdl_type)
+  if (sock < 0) return errorhandler("Could not check network device info");
+
+  strncpy(ifacetype.ifr_name, ifname, IFNAMSIZ);
+
+  if (ioctl(sock, SIOCGIFHWADDR, &ifacetype) < 0) return socketcleanup(sock, 1, "Error with ioctl call");
+
+  close(sock);
+
+  switch (ifacetype.ifr_hwaddr.sa_family)
   {
-    case IFT_ETHER:
+    case ARPHRD_EETHER:
       snprintf(buf, len, "%s %s", ETH, ifname);
       break;
 
@@ -78,4 +95,14 @@ getifacetype(struct ifaddrs* iface, const char* ifname, char* buf, size_t len)
       break;
   }
 
+  return 0;
+}
+
+static int
+socketcleanup(int sock, int errcode, const char* errmsg)
+{
+  close(sock);
+  
+  if (errcode) return errorhandler(errmsg);
+  return 0;
 }

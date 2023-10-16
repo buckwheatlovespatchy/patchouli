@@ -16,19 +16,19 @@ install()
 
   case "$OS" in
     "FreeBSD")
-      make freebsd clean
+      make freebsd install clean
     ;;
 
     "Linux")
-      make linux clean
+      make linux install clean
     ;;
 
     "NetBSD")
-      make netbsd clean
+      make netbsd install clean
     ;;
 
     "OpenBSD")
-      make openbsd clean
+      make openbsd install clean
     ;;
 
     *)
