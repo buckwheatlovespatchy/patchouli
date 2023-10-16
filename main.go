@@ -12,7 +12,7 @@ import (
 )
 
 const (
-  empty   = "   "
+  empty   = ""
   version = "v0.0.1"
 )
 
