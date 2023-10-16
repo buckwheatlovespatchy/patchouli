@@ -52,7 +52,6 @@ Patchouli gives you the power to shape your own status bar layout, with all the 
 
 Now, go ahead and let the enchantment begin. Your Patchouli adventure awaits!
 
-
 ## Requirements
 
 Before you embark on your Patchouli journey, make sure you've got the following essentials:
@@ -61,7 +60,7 @@ Before you embark on your Patchouli journey, make sure you've got the following 
 - go
 - Nerd Fonts
 
-## Patch Notes
+## Patch Note
 
 The magical journey of Patchouli is ever-evolving, and so are the tales in the enchanted scroll known as `patch-notes.txt`. This is where we document the evolution of Patchouli, highlighting new features, improvements, bug fixes, and more.
 

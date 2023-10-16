@@ -12,7 +12,7 @@ import (
   "unsafe"
 )
 
-func batteryLife() string {
+func BatteryLife() string {
   var (
     batterystr  string
     cstr        string
@@ -34,7 +34,7 @@ func batteryLife() string {
   return batterystr
 }
 
-func batteryState() string {
+func BatteryState() string {
   var (
     state string
 
@@ -51,12 +51,4 @@ func batteryState() string {
   state = C.GoString(stateCString)
 
   return state
-}
-
-func GetBatteryString() string {
-  if batteryState() == "" || batteryLife() == "" {
-    return ""
-  } else {
-    return fmt.Sprintf("%s %s", batteryState(), batteryLife())
-  }
 }

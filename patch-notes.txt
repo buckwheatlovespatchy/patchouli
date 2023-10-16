@@ -1,2 +1,0 @@
-2023-10-16:
-Patchouli v0.0.1 on desktops had a bug with the battery block. Due to how the string was being checked, the battery block would still be printed out but would be empty due to the lack of battery notes. Battery block now returns an empty string should there be no battery found. Bug was reported by chorbi4ka.
