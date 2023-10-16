@@ -12,7 +12,7 @@
 
 3. **Go Go Go (and C):** Our blend of Go and C makes Patchouli not just fast but "I just time-traveled" fast. While Go handles everyday tasks at lightning speed, we trust C to take care of the heavy lifting. Intensive computations are C's playground, ensuring Patchouli's speed remains as swift as a wizard's spell. With this dynamic duo, your status bar will be more efficient than ever.
 
-4. **No Docker, Just Metal:** We put our code to the real test — no Docker containers, just pure, unadulterated metal. Because that's how Patchouli rolls.
+4. Real Magic, Real Hardware: At Chansoft, we don't believe in virtual playpens or Docker sandboxes for such low-level sorcery. We like our magic the old-fashioned way – on real, tangible hardware. Our wizards craft Patchouli's code on real computers. You'll find us conjuring code spells on Alpine Linux, FreeBSD, NetBSD, and OpenBSD, all in the pursuit of magical perfection. But we don't stop at development; our testing happens on the very same real hardware, ensuring that Patchouli's incantations touch the essence of your system. No smoke and mirrors here – just pure, unadulterated metal. Because that's how Patchouli rolls, and rolls like a wizard!
 
 5. **Tidy, Tidy Code:** You know that feeling when you look at code and it's like staring into the Matrix? With Patchouli, we believe in keeping things crystal clear. We've chosen to use XCB instead of the older, more complex Xlib, resulting in code that's as readable as your favorite bedtime story.
 
@@ -60,6 +60,14 @@ Before you embark on your Patchouli journey, make sure you've got the following 
 - clang
 - go
 - Nerd Fonts
+
+## Patch Notes
+
+The magical journey of Patchouli is ever-evolving, and so are the tales in the enchanted scroll known as `patch-notes.txt`. This is where we document the evolution of Patchouli, highlighting new features, improvements, bug fixes, and more.
+
+To keep up with the latest enchantments, visit our [Patch Notes](https://github.com/buckwheatlovesmistral/patchouli/blob/main/patch-notes.txt). Explore the mystical changes, and embark on your Patchouli adventure with the knowledge of what's been added or refined.
+
+Stay informed and witness the magic unfold!
 
 ## License
 
