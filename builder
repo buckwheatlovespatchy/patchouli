@@ -2,6 +2,7 @@
 
 ARG=$1
 ARGC=$#
+GNU_MUSL_PATH=/usr/bin/musl-clang
 
 help_menu()
 {
@@ -20,7 +21,11 @@ install()
     ;;
 
     "Linux")
-      make linux install clean
+      if [ -x $GNU_MUSL_PATH ]; then
+        make linux install-gnu clean
+      else
+        make linux install clean
+      fi
     ;;
 
     "NetBSD")

@@ -1,2 +1,5 @@
 2023-10-16:
 Patchouli v0.0.1 on desktops had a bug with the battery block. Due to how the string was being checked, the battery block would still be printed out but would be empty due to the lack of battery notes. Battery block now returns an empty string should there be no battery found. Bug was reported by chorbi4ka.
+
+2023-10-25:
+Patchouli v0.0.1 on Linux/aarch64 had a bug with getting battery info causing a segmentation violation in an attempt to access a memory address that Patchouli had no permission to access on the stack. Bug was found and debugged on a Raspberry Pi 4 Model B device, which has an empty /sys/class/power_supply directory. The bug was solved through a simple recursive check of whether or not /sys/class/power_supply was an empty directory or not, and returns 1 if the directory is empty, allowing the Linux battery module to gracefully exit and return an empty string. Bug was discovered by Buckwheat and has been patched in Patchouli v0.0.2.

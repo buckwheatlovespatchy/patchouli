@@ -1,10 +1,15 @@
 #include <arpa/inet.h>
+#if defined __OpenBSD__ || defined __FreeBSD__
+#include <netinet/in.h>
+#include <net/if.h>
+#endif
 #include <net/if_dl.h>
 #include <net/if_types.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
 
+#include "bsd.h"
 #include "network.h"
 
 int

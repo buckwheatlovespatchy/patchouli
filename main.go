@@ -3,32 +3,18 @@ package main
 import (
   "flag"
   "fmt"
-  "runtime"
   "os"
   "time"
 
-  "chansoft/patchouli/pkg/config"
   "chansoft/patchouli/pkg/util"
 )
 
-const (
-  empty   = ""
-  version = "v0.0.1"
-)
-
 func main() {
-  var (
-    arch    string = runtime.GOARCH
-    userOS  string = runtime.GOOS
-    
-    flagversion bool
-    stat        string
-  )
+  var flagversion bool
 
   flag.BoolVar(&flagversion, "v", false, "Patchouli version")
   flag.BoolVar(&flagversion, "version", false, "Patchouli version")
-
-  flag.Usage = util.HelpMenu(version)
+  flag.Usage = util.HelpMenu
   
   flag.Parse()
 
@@ -38,21 +24,11 @@ func main() {
   }
 
   if flagversion == true {
-    fmt.Printf("Patchouli %s %s/%s\n", version, userOS, arch)
+    fmt.Printf("Patchouli %s %s/%s\n", util.VERSION, util.USER_OS, util.ARCH)
   } else {
     
     for {
-      if config.BLOCK1() == empty {
-        stat = fmt.Sprintf("[ %s | %s ]", config.BLOCK2(), config.BLOCK3())
-      } else if config.BLOCK2() == empty {
-        stat = fmt.Sprintf("[ %s | %s ]", config.BLOCK1(), config.BLOCK3())
-      } else if config.BLOCK3() == empty {
-        stat = fmt.Sprintf("[ %s | %s ]", config.BLOCK1(), config.BLOCK2())
-      } else {
-        stat = fmt.Sprintf("[ %s | %s | %s ]", config.BLOCK1(), config.BLOCK2(), config.BLOCK3())
-      }
-   
-      err := util.SetStatbar(stat)
+      err := util.SetStatbar()
       if err != nil {
         panic(err)
       }

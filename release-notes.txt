@@ -1,0 +1,5 @@
+2023-10-19 - patchouli v0.0.2:
+- Patched a bug in Linux/aarch64 (See patch notes for more detail)
+- Cleaned up battery and network libraries
+- Restructed config.go for easier manipulation within util.go
+- Keymap indicator block was added to show current keyboard layout

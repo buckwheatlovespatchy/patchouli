@@ -3,20 +3,8 @@
 
 #define WATTHOURS 1000000.0
 
-#define HIGH_BATT "󱊣"
-#define MED_BATT "󱊢"
-#define LOW_BATT "󱊡"
-#define CRIT_BATT "󰂃"
-#define CHARGE_BATT "󰂄"
-
 #include <stdlib.h>
 #include <sys/envsys.h>
-
-int
-getbatterylife(char* buf, size_t len);
-
-int
-getchargestate(char* buf, size_t len);
 
 static int
 cleanup(int sysmon_fd, int exitcode);

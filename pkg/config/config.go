@@ -2,16 +2,21 @@ package config
 
 import (
   "chansoft/patchouli/pkg/battery"
+  "chansoft/patchouli/pkg/datetime"
+  "chansoft/patchouli/pkg/keymap"
   "chansoft/patchouli/pkg/network"
-  "chansoft/patchouli/pkg/util"
 )
 
 var (
-  BATT_BLOCK func() string = battery.GetBatteryString 
-  DATE_BLOCK  func() string = util.GetDate
-  NET_BLOCK   func() string = network.NetworkInfo
+  BATT    func() string = battery.GetBatteryString 
+  DATE    func() string = datetime.GetDate
+  KEYMAP  func() string = keymap.GetKeymap
+  NET     func() string = network.GetNetworkInfo
 
-  BLOCK1     func() string = NET_BLOCK
-  BLOCK2     func() string = DATE_BLOCK
-  BLOCK3     func() string = BATT_BLOCK
+  BLOCK map[int]func() string = map[int]func() string {
+    1: NET,
+    2: KEYMAP,
+    3: DATE,
+    4: BATT,
+  }
 )

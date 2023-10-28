@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "battery.h"
+#include "linux.h"
 
 int
 getbatterylife(char* buf, size_t len)
@@ -61,6 +62,30 @@ getchargestate(char *buf, size_t len)
 }
 
 static int
+checkpowersupply()
+{
+  struct dirent* entry;
+  
+  int empty = 1;
+  DIR* powersupply = opendir(POWERSUPPLY_PATH);
+
+  if (powersupply == NULL) return errorhandler("Could not open directory");
+
+  while ((entry = readdir(powersupply)) != NULL)
+  {
+    if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, ".."))
+    {
+      empty = 0;
+      break;
+    }
+  }
+
+  closedir(powersupply);
+
+  return empty;
+}
+
+static int
 cleanup(int error, char* errormsg, FILE* file_arg, ...)
 {
   va_list files;
@@ -73,6 +98,8 @@ cleanup(int error, char* errormsg, FILE* file_arg, ...)
     fclose(file);
     file = va_arg(files, FILE*);
   }
+
+  va_end(files);
 
   if (error) return errorhandler(errormsg);
   return 0;
@@ -88,6 +115,8 @@ errorhandler(char* errormsg)
 static int
 getbatteryID()
 {
+  if (checkpowersupply()) return -1;
+
   static int batteryID = 0;
 
   for (;;)
@@ -97,7 +126,7 @@ getbatteryID()
 
     DIR* dir = opendir(path);
 
-    if (dir)
+    if (dir != NULL)
     {
       closedir(dir);
       return batteryID;

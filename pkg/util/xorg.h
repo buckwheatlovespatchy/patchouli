@@ -1,6 +1,7 @@
 #ifndef _XORG_H_
 #define _XORG_H_
 
+#include <stdlib.h>
 #include <xcb/xcb.h>
 
 int

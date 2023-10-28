@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "battery.h"
+#include "netbsd.h"
 
 int
 getbatterylife(char* buf, size_t len)

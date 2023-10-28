@@ -5,6 +5,8 @@
 #include <unistd.h>
 
 #include "battery.h"
+#include "openbsd.h"
+
 
 int
 getbatterylife(char* buf, size_t len)

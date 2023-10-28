@@ -1,0 +1,8 @@
+Planned feature updates:
+- Colour coded battery status
+- Keymap display for users with multiple keymaps
+- Volume indicator with support for ALSA, PipeWire, PulseAudio, and sndio
+
+Wanted changes:
+- Find way to cleanup battery libraries
+- Find way to cleanup network libraries

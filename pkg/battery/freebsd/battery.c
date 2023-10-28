@@ -29,7 +29,7 @@ getchargestate(char* buf, size_t len)
 
   switch (chargestate)
   {
-    case BATT_CHARGING:
+    case 1:
       snprintf(buf, len, CHARGE_BATT);
       break;
 

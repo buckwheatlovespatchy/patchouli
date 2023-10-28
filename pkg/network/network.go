@@ -11,7 +11,7 @@ import (
   "unsafe"
 )
 
-func NetworkInfo() string {
+func GetNetworkInfo() string {
   var (
     network     string
     
