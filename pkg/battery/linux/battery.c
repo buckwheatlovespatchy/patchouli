@@ -46,12 +46,12 @@ getchargestate(char *buf, size_t len)
   if (fgets(life, VAR_SIZE, batterylife) == NULL) return cleanup(1, NULL, batterylife, batterystate, NULL);
   if (fgets(stat, VAR_SIZE, batterystate) == NULL) return cleanup(1, NULL, batterylife, batterystate, NULL);
 
-  if (strcmp(stat, "Charging")) snprintf(buf, len, "%s", CHARGE_BATT);
-
-  else 
+  if (!strcmp(stat, "Charging\n")) snprintf(buf, len, "%s", CHARGE_BATT);
+  
+  else
   {
     int capacity = atoi(life);
-
+  
     if (capacity >= 75) snprintf(buf, len, "%s", HIGH_BATT);
     else if (capacity >= 50) snprintf(buf, len, "%s", MED_BATT);
     else if (capacity >= 25) snprintf(buf, len, "%s", LOW_BATT);

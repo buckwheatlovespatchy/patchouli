@@ -3,6 +3,7 @@
 ARG=$1
 ARGC=$#
 GNU_MUSL_PATH=/usr/bin/musl-clang
+PROGRAM=patchouli
 
 help_menu()
 {
@@ -21,8 +22,12 @@ install()
     ;;
 
     "Linux")
-      if [ -x $GNU_MUSL_PATH ]; then
-        make linux install-gnu clean
+      if [ -z "$(ldd --version 2>&1 | head -n 1 | grep musl)"]; then
+        if [ -x $GNU_MUSL_PATH ]; then
+          make linux install-gnu clean
+        else
+          printf "musl libc was not found on your computer! musl libc is recommended for use with ${PROGRAM}, please install it with your package manager!\n"
+        fi
       else
         make linux install clean
       fi
