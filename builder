@@ -22,7 +22,7 @@ install()
     ;;
 
     "Linux")
-      if [ -z "$(ldd --version 2>&1 | head -n 1 | grep musl)"]; then
+      if [ -z "$(ldd --version 2>&1 | head -n 1 | grep musl)" ]; then
         if [ -x $GNU_MUSL_PATH ]; then
           make linux install-gnu clean
         else
